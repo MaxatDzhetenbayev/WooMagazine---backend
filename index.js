@@ -1,12 +1,16 @@
 import express from 'express'
 import cors from 'cors'
 import { config } from 'dotenv'
+
+
 import { sequelize } from './db.js'
-import * as Models from './models/models.js'
+import { GlobalRouter } from './routes/index.js'
+
 
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use('/api', GlobalRouter)
 
 config()
 
@@ -17,7 +21,6 @@ app.listen(PORT, async () => {
 	try {
 
 		await sequelize.authenticate()
-		// await sequelize.sync()
 		console.log('SERVER IS WORKING!')
 	} catch (err) {
 		console.log(err)
