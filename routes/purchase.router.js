@@ -6,6 +6,7 @@ const app = Router()
 
 
 app.post('/purchase', PurchaseController.createPurchase)
+app.get('/purchase/order/:id', PurchaseController.getClientPurchase)
 
 
 
