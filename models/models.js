@@ -30,10 +30,10 @@ export const Feedback = sequelize.define('feedback', {
 
 
 export const Buyer = sequelize.define('buyer', {
-	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	id: { type: DataTypes.STRING, primaryKey: true},
 	name: { type: DataTypes.STRING, allowNull: false },
 	email: { type: DataTypes.STRING, allowNull: false, validate: { isEmail: true } },
-	phone: { type: DataTypes.INTEGER, allowNull: false },
+	phone: { type: DataTypes.STRING, allowNull: false },
 	country: { type: DataTypes.STRING, allowNull: false },
 	city: { type: DataTypes.STRING, allowNull: false },
 	street: { type: DataTypes.STRING, allowNull: false },
@@ -48,10 +48,12 @@ export const Basket = sequelize.define('basket', {
 export const Product = sequelize.define('product', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	title: { type: DataTypes.STRING, allowNull: false },
-	image: { type: DataTypes.STRING, defaultValue: null},
+	image: { type: DataTypes.STRING, defaultValue: null },
 	price: { type: DataTypes.INTEGER, allowNull: false },
 	count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
 }, { timestamps: false })
+
+export const BasketProduct = sequelize.define('basket_products', {})
 
 export const Type = sequelize.define('type', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -78,8 +80,8 @@ Basket.belongsTo(Buyer, { onDelete: 'CASCADE' })
 Buyer.hasOne(Order)
 Order.belongsTo(Buyer, { onDelete: 'CASCADE' })
 
-Basket.belongsToMany(Product, { through: 'basket_product' })
-Product.belongsToMany(Basket, { through: 'basket_product' })
+Basket.belongsToMany(Product, { through: 'basket_products' })
+Product.belongsToMany(Basket, { through: 'basket_products' })
 
 Type.hasMany(Product)
 Product.belongsTo(Type, { onDelete: 'CASCADE' })
