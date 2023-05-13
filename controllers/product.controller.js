@@ -61,11 +61,18 @@ export const getOne = async (req, res) => {
 export const addProduct = async (req, res) => {
 
 	const { title, price, type, entities } = req.body
+	const image = req.file
 
 	try {
+		const parsedEnteties = []
 		const products = []
 
-		for (const element of entities) {
+
+		for (const item of entities) {
+			parsedEnteties.push(JSON.parse(item))
+		}
+
+		for (const element of parsedEnteties) {
 			const { id: propertyId } = await Property.findOne({
 				where: {
 					color: element.color,
@@ -76,6 +83,7 @@ export const addProduct = async (req, res) => {
 			products.push({
 				title,
 				price,
+				image: image.filename,
 				typeId: type,
 				propertyId,
 				count: element.count

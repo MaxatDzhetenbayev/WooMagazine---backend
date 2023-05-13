@@ -5,7 +5,6 @@ import { Op } from 'sequelize'
 
 import nodemailer from 'nodemailer'
 import directTransport from 'nodemailer-direct-transport'
-import { sequelize } from '../db.js'
 
 export const createPurchase = async (req, res) => {
 
