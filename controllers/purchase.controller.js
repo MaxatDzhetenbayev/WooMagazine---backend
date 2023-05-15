@@ -4,19 +4,22 @@ import { v4 as uuid } from 'uuid'
 import { Op } from 'sequelize'
 
 import nodemailer from 'nodemailer'
-import directTransport from 'nodemailer-direct-transport'
 
 export const createPurchase = async (req, res) => {
 
 	const { buyer: { products, ...userInfo } } = req.body
 
-	const fromHost = 'mail.com'
-	const from = `woomagazine@${fromHost}`
+	const from = 'woomagazine feedback <woomagazinesemey01@gmail.com>'
 	const to = userInfo.email
 
-	const transport = nodemailer.createTransport(directTransport({
-		name: fromHost
-	}));
+	const transport = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'woomagazinesemey01@gmail.com',
+			pass: 'czfyzvfpapegbkxo'
+		}
+
+	});
 
 	const userId = uuid()
 	const orderId = uuid()
@@ -70,7 +73,7 @@ export const createPurchase = async (req, res) => {
 			html: `
 				Дорогой ${userInfo.name}, спасибо вам за использование нашего магазина. </br>
 				Ваш запрос на покупку товаров стоит на обработке. В скором времени вам позвонит наш менеджер. </br>
-				Вам доступен мониторинг за вашим товаром по этому адресу <a href="http://localhost:5000/api/purchase/order/${buyer.id}">http://localhost:5000/api/purchase/order/${buyer.id}</a>
+				Вам доступен мониторинг за вашим товаром по этому адресу <a href="http://localhost:5000/purchase/order/${buyer.id}">http://localhost:5000/purchase/order/${buyer.id}</a>
 			`
 		}, (err, data) => {
 			if (err) console.log('Ошибка отправки сообщения на почту')
