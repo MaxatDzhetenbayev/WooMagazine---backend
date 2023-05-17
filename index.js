@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 5000
 app.listen(PORT, async () => {
 	try {
 		await sequelize.authenticate()
-		// await sequelize.sync({ force: true })
+		// await Models.Feedback.sync({ force: true })
 		console.log('SERVER IS WORKING!')
 	} catch (err) {
 		console.log(err)

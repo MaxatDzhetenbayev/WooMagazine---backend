@@ -9,7 +9,7 @@ export const createPurchase = async (req, res) => {
 
 	const { buyer: { products, ...userInfo } } = req.body
 
-	const from = 'woomagazine feedback <woomagazinesemey01@gmail.com>'
+	const from = 'woomagazine <woomagazinesemey01@gmail.com>'
 	const to = userInfo.email
 
 	const transport = nodemailer.createTransport({
@@ -76,7 +76,7 @@ export const createPurchase = async (req, res) => {
 				Вам доступен мониторинг за вашим товаром по этому адресу <a href="http://localhost:5000/purchase/order/${buyer.id}">http://localhost:5000/purchase/order/${buyer.id}</a>
 			`
 		}, (err, data) => {
-			if (err) console.log('Ошибка отправки сообщения на почту')
+			if (err) return console.log('Ошибка отправки сообщения на почту')
 
 			console.log(`сообщение успешно отправлена на почту: ${userInfo.email}`)
 		})
